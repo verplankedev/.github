@@ -1,9 +1,7 @@
 name: Github Release
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
 
 jobs:
   github_release:
@@ -12,25 +10,21 @@ jobs:
     name: Github Release
 
     steps:
-      - name: show release token
-        run: echo "${{ secrets.RELEASE_TOKEN }}"
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-#
-#      - name: Checkout Code
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#
-#      - name: Setup Node
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version-file: '.nvmrc'
-#          cache: 'npm'
-#
-#      - name: Install Dependencies
-#        run: npm i -D semantic-release conventional-changelog-conventionalcommits
-#
-#      - name: Create Release
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-#        run: npx semantic-release
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm i -D semantic-release conventional-changelog-conventionalcommits
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: npx semantic-release
