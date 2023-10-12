@@ -1,0 +1,13 @@
+name: Create Github Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Github Release
+    uses: verplankedev/.github/.github/workflows/github-release.yml@main
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }} # defined at ORG level at Github (PAT)
