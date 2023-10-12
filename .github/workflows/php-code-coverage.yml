@@ -14,15 +14,15 @@ jobs:
   code_coverage:
     runs-on: ubuntu-22.04
 
-#    services:
-#      mysql:
-#        image: mysql:8
-#        env:
-#          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-#          MYSQL_DATABASE: test
-#        ports:
-#          - 3306:3306
-#        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     name: Code Coverage
 
@@ -30,7 +30,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Create .env file from Secret
+      - name: Create .env file from secret
         run: echo "${{ secrets.env_file }}" >> .env
 
       - name: Read .env file
@@ -51,25 +51,17 @@ jobs:
         with:
           composer-options: "--no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist"
 
-      - name: list all files
-        run: ls -la
-
       - name: Generate Application Key
         run: php artisan key:generate
-#
-#      - name: Generate Code Coverage
-#        run: php artisan test --parallel --coverage-html coverage
-##        env:
-##          DB_PORT: ${{ job.services.mysql.ports[3306] }}
-##          DB_USERNAME: root
-##          AWS_ACCESS_KEY_ID: randomKey
-##          AWS_SECRET_ACCESS_KEY: randomSecret
-#
-#      - name: Store artifacts
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: coverage-${{ github.ref_name }}
-#          path: |
-#            coverage
-#            storage/logs
-#          retention-days: 1
+
+      - name: Generate Code Coverage
+        run: php artisan test --parallel --coverage-html coverage
+
+      - name: Store artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-${{ github.ref_name }}
+          path: |
+            coverage
+            storage/logs
+          retention-days: 1
