@@ -15,20 +15,12 @@ jobs:
         with:
           fetch-depth: 0
 
-
-      - name: Output variables
-        run: |
-          echo '${{ vars.SENTRY_ORG }}'
-          echo '${{ vars.SENTRY_PROJECT }}'
+      - name: Create Sentry Release
+        uses: getsentry/action-release@v1
         env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-
-#      - name: Create Sentry Release
-#        uses: getsentry/action-release@v1
-#        env:
-#          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }} # defined at org level
-#          SENTRY_ORG: ${{ vars.SENTRY_ORG }} # defined at org level
-#          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }} # defined at repo level
-#        with:
-#          environment: production
-#          version: ${{ github.event.release.tag_name }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }} # defined at org level
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }} # defined at org level
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }} # defined at repo level
+        with:
+          environment: production
+          version: ${{ github.event.release.tag_name }}
