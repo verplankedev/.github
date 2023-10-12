@@ -3,7 +3,7 @@ name: Generate PHP Code Coverage Report
 on:
   workflow_call:
     secrets:
-      env_vars:
+      env_file:
         required: true
     inputs:
       php:
@@ -14,8 +14,8 @@ jobs:
   code_coverage:
     runs-on: ubuntu-22.04
 
-    env:
-      env_vars: ${{ secrets.env_vars }}
+#    env:
+#      env_file: ${{ secrets.env_file }}
 
 #    services:
 #      mysql:
@@ -30,18 +30,28 @@ jobs:
     name: Code Coverage
 
     steps:
-      - name: Decode credentials as environment variables
-        run: |
-          for i in $env_vars; do
-            i=$(echo $i | sed 's/=.*//g')=$(echo ${i#*=})
-            printf '%s\n' $i >> $GITHUB_ENV
-          done
+      - name: Import environment variables from a file
+        run: cat ${{ secrets.env_file }} >> $GITHUB_ENV
+#        id: import-env
+#        shell: bash
+#        run: |
+#          while read line; do
+#            echo "$line" >> $GITHUB_ENV
+#          done < ${{ env.ENV_FILE }}
+
+#      - name: Set environment variables
+#        run: |
+#          for i in $env_vars; do
+#            i=$(echo $i | sed 's/=.*//g')=$(echo ${i#*=})
+#            printf '%s\n' $i >> $GITHUB_ENV
+#          done
 
       - name: Validate credentials
         run: |
-          # Secrets are now available as masked environment variable.
           echo $APP_NAME
-          echo $DB_USERNAME
+          echo $DB_DATABASE
+#          echo $APP_NAME
+#          echo $DB_USERNAME
 
 #      - name: Setup PHP
 #        uses: shivammathur/setup-php@v2
