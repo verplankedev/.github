@@ -39,25 +39,23 @@ jobs:
           envFile: '.env'
           mask: true
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php }}
+          tools: composer:v2
+          coverage: pcov
+
+      - name: Install & Cache Composer Dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist"
+
       - name: list all files
         run: ls -la
 
-
-#
-#      - name: Setup PHP
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: ${{ inputs.php }}
-#          tools: composer:v2
-#          coverage: pcov
-#
-#      - name: Install & Cache Composer Dependencies
-#        uses: ramsey/composer-install@v2
-#        with:
-#          composer-options: "--no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist"
-#
-##      - name: Generate Application Key
-##        run: php artisan key:generate
+      - name: Generate Application Key
+        run: php artisan key:generate
 #
 #      - name: Generate Code Coverage
 #        run: php artisan test --parallel --coverage-html coverage
