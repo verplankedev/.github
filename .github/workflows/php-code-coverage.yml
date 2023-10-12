@@ -37,7 +37,7 @@ jobs:
 
       - uses: cardinalby/export-env-action@v2
         with:
-          envFile: '.env.ci'
+          envFile: '.env'
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
