@@ -18,9 +18,9 @@ jobs:
       - name: Create Sentry Release
         uses: getsentry/action-release@v1
         env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }} # defined at org level
-          SENTRY_ORG: ${{ vars.SENTRY_ORG }} # defined at org level
-          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }} # defined at repo level
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }} # defined at ORG level at Github
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }} # defined at ORG level at Github
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }} # defined at REPO level at Github
         with:
           environment: production
           version: ${{ github.event.release.tag_name }}
