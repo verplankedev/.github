@@ -40,12 +40,8 @@ jobs:
       - name: Validate credentials
         run: |
           # Secrets are now available as masked environment variable.
-          echo $FOO
-          echo '${{ env.FOO }}'
-          echo $APP_ENV
-          echo '${{ env.APP_ENV }}'
           echo $APP_NAME
-          echo '${{ env.APP_NAME }}'
+          echo $DB_USERNAME
 
 #      - name: Setup PHP
 #        uses: shivammathur/setup-php@v2
