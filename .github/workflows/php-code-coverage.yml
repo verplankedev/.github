@@ -1,0 +1,88 @@
+name: Generate PHP Code Coverage Report
+
+on:
+  workflow_call:
+    secrets:
+      env_vars:
+        required: true
+    inputs:
+      php:
+        default: '8.1'
+        type: string
+
+jobs:
+  code_coverage:
+    runs-on: ubuntu-22.04
+
+    env:
+      env_vars: ${{ secrets.env_vars }}
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    name: Code Coverage
+
+    steps:
+      - name: Decode credentials as environment variables
+        run: |
+          for i in $env_vars; do
+            i=$(echo $i | sed 's/=.*//g')=$(echo ${i#*=} | base64 -di | base64 -di)
+            echo ::add-mask::${i#*=}
+            printf '%s\n' $i >> $GITHUB_ENV
+          done
+
+      - name: Validate credentials
+        run: |
+          # Secrets are now available as masked environment variable.
+          echo $CREDENTIAL1
+          echo '${{ env.CREDENTIAL1 }}'
+          echo $CREDENTIAL2
+          echo '${{ env.CREDENTIAL2 }}'
+          echo $FOO
+          echo '${{ env.FOO }}'
+          echo $APP_ENV
+          echo '${{ env.APP_ENV }}'
+
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ inputs.php }}
+#          tools: composer:v2
+#          coverage: pcov
+#
+#      - name: Checkout Code
+#        uses: actions/checkout@v4
+#
+#      - name: Install & Cache Composer Dependencies
+#        uses: ramsey/composer-install@v2
+#        with:
+#          composer-options: "--no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist"
+#
+#      - name: Generate Application Key
+#        run: |
+#          echo "APP_KEY=" > .env
+#          php artisan key:generate
+#
+#      - name: Generate Code Coverage
+#        run: php artisan test --parallel --coverage-html coverage
+#        env:
+#          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+#          DB_USERNAME: root
+#          AWS_ACCESS_KEY_ID: randomKey
+#          AWS_SECRET_ACCESS_KEY: randomSecret
+#
+#      - name: Store artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: coverage-${{ github.ref_name }}
+#          path: |
+#            coverage
+#            storage/logs
+#          retention-days: 1
