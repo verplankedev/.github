@@ -33,22 +33,19 @@ jobs:
       - name: Decode credentials as environment variables
         run: |
           for i in $env_vars; do
-            i=$(echo $i | sed 's/=.*//g')=$(echo ${i#*=} | base64 -di | base64 -di)
-            echo ::add-mask::${i#*=}
+            i=$(echo $i | sed 's/=.*//g')=$(echo ${i#*=})
             printf '%s\n' $i >> $GITHUB_ENV
           done
 
       - name: Validate credentials
         run: |
           # Secrets are now available as masked environment variable.
-          echo $CREDENTIAL1
-          echo '${{ env.CREDENTIAL1 }}'
-          echo $CREDENTIAL2
-          echo '${{ env.CREDENTIAL2 }}'
           echo $FOO
           echo '${{ env.FOO }}'
           echo $APP_ENV
           echo '${{ env.APP_ENV }}'
+          echo $APP_NAME
+          echo '${{ env.APP_NAME }}'
 
 #      - name: Setup PHP
 #        uses: shivammathur/setup-php@v2
