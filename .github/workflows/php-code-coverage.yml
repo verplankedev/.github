@@ -30,12 +30,15 @@ jobs:
     name: Code Coverage
 
     steps:
-      - name: output
-        run: echo '${{ secrets.env_file }}'
+      - name: Create .env file from Secret
+        id: import-env
+        run: |
+          echo "${{ secrets.env_file }}" >> .env.ci
 
       - uses: cardinalby/export-env-action@v2
         with:
-          envFile: ${{ secrets.env_file }}
+          envFile: '.env.ci'
+          mask: true
 
       - name: Validate credentials
         run: |
