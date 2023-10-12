@@ -4,7 +4,7 @@ on:
   workflow_call:
     secrets:
       RELEASE_TOKEN:
-        description: 'Release token for Github'
+        description: 'PAT for creating a release at Github'
         required: false
 
 jobs:
