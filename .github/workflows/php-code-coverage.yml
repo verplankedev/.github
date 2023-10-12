@@ -37,9 +37,10 @@ jobs:
         uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env'
+          mask: true
 
-      - name: PWD
-        run: pwd
+      - name: list all files
+        run: ls -la
 
 
 #
