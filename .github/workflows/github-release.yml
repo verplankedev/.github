@@ -9,6 +9,8 @@ on:
 
 jobs:
   github_release:
+    if: ${{ github.ref == 'refs/heads/main' }} # guard, only run workflow on main branch
+
     runs-on: ubuntu-22.04
 
     name: Github Release
