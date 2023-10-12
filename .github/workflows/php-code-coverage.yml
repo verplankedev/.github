@@ -33,53 +33,43 @@ jobs:
       - name: Create .env file from Secret
         id: import-env
         run: |
-          echo "${{ secrets.env_file }}" >> .env.ci
+          echo "${{ secrets.env_file }}" >> .env
 
       - uses: cardinalby/export-env-action@v2
         with:
           envFile: '.env.ci'
-          mask: true
 
-      - name: Validate credentials
-        run: |
-          echo $APP_NAME
-          echo $DB_DATABASE
-#          echo $APP_NAME
-#          echo $DB_USERNAME
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php }}
+          tools: composer:v2
+          coverage: pcov
 
-#      - name: Setup PHP
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: ${{ inputs.php }}
-#          tools: composer:v2
-#          coverage: pcov
-#
-#      - name: Checkout Code
-#        uses: actions/checkout@v4
-#
-#      - name: Install & Cache Composer Dependencies
-#        uses: ramsey/composer-install@v2
-#        with:
-#          composer-options: "--no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist"
-#
-#      - name: Generate Application Key
-#        run: |
-#          echo "APP_KEY=" > .env
-#          php artisan key:generate
-#
-#      - name: Generate Code Coverage
-#        run: php artisan test --parallel --coverage-html coverage
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install & Cache Composer Dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          composer-options: "--no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist"
+
+      - name: Generate Application Key
+        run: php artisan key:generate
+
+      - name: Generate Code Coverage
+        run: php artisan test --parallel --coverage-html coverage
 #        env:
 #          DB_PORT: ${{ job.services.mysql.ports[3306] }}
 #          DB_USERNAME: root
 #          AWS_ACCESS_KEY_ID: randomKey
 #          AWS_SECRET_ACCESS_KEY: randomSecret
-#
-#      - name: Store artifacts
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: coverage-${{ github.ref_name }}
-#          path: |
-#            coverage
-#            storage/logs
-#          retention-days: 1
+
+      - name: Store artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-${{ github.ref_name }}
+          path: |
+            coverage
+            storage/logs
+          retention-days: 1
