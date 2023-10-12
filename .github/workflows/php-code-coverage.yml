@@ -30,26 +30,9 @@ jobs:
     name: Code Coverage
 
     steps:
-      - name: Import environment variables from a file
-        run: |
-          while read line; do
-            echo "$line" >> $GITHUB_ENV
-          done < ${{ secrets.env_file }}
-          
-
-#        id: import-env
-#        shell: bash
-#        run: |
-#          while read line; do
-#            echo "$line" >> $GITHUB_ENV
-#          done < ${{ env.ENV_FILE }}
-
-#      - name: Set environment variables
-#        run: |
-#          for i in $env_vars; do
-#            i=$(echo $i | sed 's/=.*//g')=$(echo ${i#*=})
-#            printf '%s\n' $i >> $GITHUB_ENV
-#          done
+      - uses: cardinalby/export-env-action@v2
+        with:
+          envFile: ${{ secrets.env_file }}
 
       - name: Validate credentials
         run: |
