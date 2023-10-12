@@ -30,6 +30,9 @@ jobs:
     name: Code Coverage
 
     steps:
+      - name: output
+        run: echo '${{ secrets.env_file }}'
+
       - uses: cardinalby/export-env-action@v2
         with:
           envFile: ${{ secrets.env_file }}
