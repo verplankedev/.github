@@ -11,7 +11,7 @@ jobs:
   github_release:
     runs-on: ubuntu-22.04
 
-    name: Github Release
+#    name: Github Release
 
     steps:
       - name: Checkout Code
