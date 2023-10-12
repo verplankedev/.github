@@ -19,9 +19,6 @@ jobs:
     name: PHPStan
 
     steps:
-      - name: Output
-        run: echo '${{ inputs.php }}'
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:

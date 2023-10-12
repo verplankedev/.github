@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy_to_heroku:
-    if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    if: ${{ startsWith(github.ref, 'refs/tags/') }} # guard, only tags are allowed to deploy
 
     runs-on: ubuntu-22.04
 
@@ -27,10 +27,10 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
 
-#      - uses: akhileshns/heroku-deploy@v3.12.14
-#        with:
-#          heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # defined at ORG level at Github
-#          heroku_app_name: ${{ vars.HEROKU_APP_NAME }} # defined at REPO level at Github
-#          heroku_email: devops@noprotocol.nl # defined at ORG level at Github
-#          team: ${{ vars.HEROKU_ORG }} # defined at ORG level at Github
-#          branch: ${{ github.ref }}
+      - uses: akhileshns/heroku-deploy@v3.12.14
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }} # defined at ORG level at Github
+          heroku_app_name: ${{ vars.HEROKU_APP_NAME }} # defined at REPO level at Github
+          heroku_email: devops@noprotocol.nl
+          team: ${{ vars.HEROKU_ORG }} # defined at ORG level at Github
+          branch: ${{ github.ref }}
