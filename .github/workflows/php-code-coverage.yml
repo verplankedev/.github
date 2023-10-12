@@ -31,7 +31,12 @@ jobs:
 
     steps:
       - name: Import environment variables from a file
-        run: cat ${{ secrets.env_file }} >> $GITHUB_ENV
+        run: |
+          while read line; do
+            echo "$line" >> $GITHUB_ENV
+          done < ${{ secrets.env_file }}
+          
+
 #        id: import-env
 #        shell: bash
 #        run: |
