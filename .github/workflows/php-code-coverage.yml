@@ -33,7 +33,9 @@ jobs:
       - name: Create .env file from Secret
         id: import-env
         run: |
+          touch .env
           echo "${{ secrets.env_file }}" >> .env
+          echo "$APP_NAME"
 
       - uses: cardinalby/export-env-action@v2
         with:
