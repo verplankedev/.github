@@ -13,7 +13,7 @@ runs:
   steps:
     - name: Setup Laravel Nova
       shell: sh
-      run: composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_3_USERNAME }}" "${{ secrets.NOVA_3_PASSWORD }}"
+      run: composer config "http-basic.nova.laravel.com" ${{ secrets.NOVA_3_USERNAME }} ${{ secrets.NOVA_3_PASSWORD }}
 
     - name: Install Laravel Nova
       shell: sh
