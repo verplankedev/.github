@@ -1,4 +1,4 @@
-name: Test PHP Workflow
+name: Install Laravel Nova
 
 on:
   workflow_dispatch:
@@ -29,18 +29,16 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Install Laravel Nova 3 (Orion)
+      - name: Setup Laravel Nova 3 (Orion)
         if: inputs.version == '3'
         uses: ./.github/workflows/actions/laravel-nova
         with:
-          version: ${{ inputs.version }}
           username: ${{ inputs.NOVA_3_USERNAME }}
           password: ${{ inputs.NOVA_3_PASSWORD }}
 
-      - name: Install Laravel Nova 4 (Silver Surfer)
+      - name: Setup Laravel Nova 4 (Silver Surfer)
         if: inputs.version == '4'
         uses: ./.github/workflows/actions/laravel-nova
         with:
-          version: ${{ inputs.version }}
           username: ${{ secrets.NOVA_4_USERNAME }}
           password: ${{ secrets.NOVA_4_PASSWORD }}
