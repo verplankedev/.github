@@ -1,0 +1,46 @@
+name: 'Laravel Nova'
+description: 'Install Laravel Nova'
+inputs:
+  version:
+      description: 'Which version of Laravel Nova to install'
+      required: true
+      default: '4'
+
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Laravel Nova
+      run: composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_3_USERNAME }}" "${{ secrets.NOVA_3_PASSWORD }}"
+
+    - name: Install Laravel Nova
+      run: composer require "laravel/nova:^${{ inputs.version }}.0"
+
+#    - name: Set Greeting
+#      run: echo "Hello $INPUT_WHO_TO_GREET."
+#      shell: bash
+#      env:
+#        INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+#
+#
+#
+#
+#
+#
+#
+#    - name: Random Number Generator
+#      id: random-number-generator
+#      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+#      shell: bash
+#
+#    - name: Set GitHub Path
+#      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+#      shell: bash
+#      env:
+#        GITHUB_ACTION_PATH: ${{ github.action_path }}
+#
+#    - name: Run goodbye.sh
+#      run: goodbye.sh
+#      shell: bash
+#
