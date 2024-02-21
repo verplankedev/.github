@@ -1,0 +1,41 @@
+name: Code Style
+
+on:
+  workflow_call:
+    inputs:
+      php:
+        default: '8.2'
+        type: string
+      commit_message:
+        default: Fix code style
+        type: string
+      fix:
+        default: true
+        type: boolean
+
+jobs:
+  code_style:
+    runs-on: ubuntu-22.04
+
+    name: Code Style
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php }}
+          tools: composer:v2
+          extensions: json, dom, curl, libxml, mbstring
+          coverage: none
+
+      - name: Run Laravel Pint
+        uses: ./.github/workflows/actions/laravel-pint
+
+      - name: Commit linted files
+        if: ${{ inputs.fix }}
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: ${{ inputs.commit_message }}
