@@ -1,0 +1,36 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+change-template: '- $TITLE ([#$NUMBER]($NUMBER)) [@$AUTHOR](https://github.com/$AUTHOR)'
+
+template: |
+  $CHANGES
+
+footer: |  
+  $CONTRIBUTORS
+
+categories:
+  - title: 'Features'
+    label: 'feature'
+
+  - title: 'Fixes'
+    label: 'fix'
+
+  - title: 'Chores'
+    label: 'chore'
+
+autolabeler:
+  - label: 'chore'
+    files:
+      - '*.md'
+    branch:
+      - '/chore\/.+/'
+
+  - label: 'fix'
+    branch:
+      - '/fix\/.+/'
+      - '/hotfix\/.+/'
+
+  - label: 'feature'
+    branch:
+      - '/feat\/.+/'
+      - '/feature\/.+/'
