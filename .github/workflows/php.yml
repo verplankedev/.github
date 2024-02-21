@@ -42,5 +42,5 @@ jobs:
         uses: ./.github/workflows/actions/laravel-nova
         with:
           version: ${{ inputs.version }}
-          username: ${{ inputs.NOVA_4_USERNAME }}
-          password: ${{ inputs.NOVA_4_PASSWORD }}
+          username: ${{ secrets.NOVA_4_USERNAME }}
+          password: ${{ secrets.NOVA_4_PASSWORD }}
