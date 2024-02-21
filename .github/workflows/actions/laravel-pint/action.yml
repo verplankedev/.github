@@ -1,0 +1,20 @@
+name: 'Setup Laravel Nova'
+description: 'Setup Laravel Nova for installation'
+inputs:
+  username:
+    description: 'Nova username'
+    required: true
+  password:
+    description: 'Nova license key (password)'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Laravel Pint
+      shell: bash
+      run: composer global require laravel/pint
+
+    - name: Run Laravel Pint
+      shell: bash
+      run: pint --config .github/workflows/actions/laravel-pint/pint.json --dirty
