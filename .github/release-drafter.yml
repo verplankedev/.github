@@ -1,6 +1,6 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
-change-template: '- $TITLE ([#$NUMBER]($NUMBER)) [@$AUTHOR](https://github.com/$AUTHOR)'
+change-template: '- $TITLE ([#$NUMBER]($NUMBER)) @$AUTHOR'
 
 template: |
   $CHANGES
