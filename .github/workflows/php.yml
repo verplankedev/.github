@@ -29,7 +29,7 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Install Laravel Nova
+      - name: Install Laravel Nova 3 (Orion)
         if: inputs.version == '3'
         uses: ./.github/workflows/actions/laravel-nova
         with:
@@ -37,8 +37,8 @@ jobs:
           username: ${{ inputs.NOVA_3_USERNAME }}
           password: ${{ inputs.NOVA_3_PASSWORD }}
 
-      - name: Install Laravel Nova
-        if: inputs.version == '3'
+      - name: Install Laravel Nova 4 (Silver Surfer)
+        if: inputs.version == '4'
         uses: ./.github/workflows/actions/laravel-nova
         with:
           version: ${{ inputs.version }}
