@@ -2,14 +2,15 @@ name: Test PHP Workflow
 
 on:
   workflow_dispatch:
-    version:
-      description: 'Which version of Laravel Nova to install'
-      required: true
-      default: '4'
-      type: choice
-      options:
-        - '4'
-        - '3'
+    inputs:
+      version:
+        description: 'Which version of Laravel Nova to install'
+        required: true
+        default: '4'
+        type: choice
+        options:
+          - '4'
+          - '3'
 
 jobs:
   test_php_workflow:
@@ -29,7 +30,17 @@ jobs:
           coverage: none
 
       - name: Install Laravel Nova
-        # if: matrix.php >= 8.2
+        if: inputs.version == '3'
         uses: ./.github/workflows/actions/laravel-nova
         with:
           version: ${{ inputs.version }}
+          username: ${{ inputs.NOVA_3_USERNAME }}
+          password: ${{ inputs.NOVA_3_PASSWORD }}
+
+      - name: Install Laravel Nova
+        if: inputs.version == '3'
+        uses: ./.github/workflows/actions/laravel-nova
+        with:
+          version: ${{ inputs.version }}
+          username: ${{ inputs.NOVA_4_USERNAME }}
+          password: ${{ inputs.NOVA_4_PASSWORD }}

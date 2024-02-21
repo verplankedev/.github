@@ -2,22 +2,30 @@ name: 'Laravel Nova'
 description: 'Install Laravel Nova'
 inputs:
   version:
-      description: 'Which version of Laravel Nova to install'
-      required: true
-      default: '4'
-
-
+    description: 'Which version of Laravel Nova to install'
+    required: true
+    default: '4'
+  username:
+    description: 'Nova username'
+    required: true
+  password:
+    description: 'Nova license key (password)'
+    required: true
 
 runs:
   using: "composite"
   steps:
     - name: Setup Laravel Nova
-      shell: sh
-      run: composer config "http-basic.nova.laravel.com" ${{ secrets.NOVA_3_USERNAME }} ${{ secrets.NOVA_3_PASSWORD }}
+      shell: bash
+      run: |
+        php -v
+        composer config "http-basic.nova.laravel.com" "${{ inputs.username }}" "${{ inputs.password }}"
 
     - name: Install Laravel Nova
-      shell: sh
-      run: composer require "laravel/nova:^${{ inputs.version }}.0"
+      shell: bash
+      run: |
+        php -v
+        composer require "laravel/nova:^${{ inputs.version }}.0"
 
 #    - name: Set Greeting
 #      run: echo "Hello $INPUT_WHO_TO_GREET."
