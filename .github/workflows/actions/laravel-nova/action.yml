@@ -12,9 +12,11 @@ runs:
   using: "composite"
   steps:
     - name: Setup Laravel Nova
+      shell: bash
       run: composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_3_USERNAME }}" "${{ secrets.NOVA_3_PASSWORD }}"
 
     - name: Install Laravel Nova
+      shell: bash
       run: composer require "laravel/nova:^${{ inputs.version }}.0"
 
 #    - name: Set Greeting

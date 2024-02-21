@@ -30,6 +30,6 @@ jobs:
 
       - name: Install Laravel Nova
         # if: matrix.php >= 8.2
-        uses: ./actions/laravel-nova
+        uses: ./actions/.github/actions/laravel-nova
         with:
           version: ${{ inputs.version }}
