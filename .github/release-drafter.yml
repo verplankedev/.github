@@ -3,8 +3,8 @@ tag-template: 'v$RESOLVED_VERSION'
 change-template: '- $TITLE by @$AUTHOR in [#$NUMBER]($URL)'
 template: |
   $CHANGES
-footer: |  
-  $CONTRIBUTORS
+#footer: |
+#  $CONTRIBUTORS
 categories:
   - title: 'Features'
     label: 'feature'
