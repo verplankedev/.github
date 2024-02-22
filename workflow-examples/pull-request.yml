@@ -1,6 +1,6 @@
 # Ensures every pull request has a label when a pull request is opened, reopened or is updated with a new commit.
 
-name: Label Pull Request
+name: Pull Requests
 
 on:
   pull_request_target:
@@ -21,6 +21,7 @@ jobs:
     uses: verplankedev/.github/.github/workflows/pull-requests.yml@main
 
     steps:
+      - name:
       - uses: release-drafter/release-drafter@v6
         with:
           disable-releaser: true
