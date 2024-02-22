@@ -12,17 +12,14 @@ permissions:
   contents: read
 
 jobs:
-  draft_release: # rename to "label_pull_request"
+  draft_release:
     runs-on: ubuntu-22.04
 
     permissions:
       contents: write
       pull-requests: write
 
-    # add name "Label Pull Request"
-
     steps:
-      # add name "- name:
       - uses: release-drafter/release-drafter@v6
         with:
           disable-releaser: true
