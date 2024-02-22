@@ -3,7 +3,13 @@ tag-template: 'v$RESOLVED_VERSION'
 change-template: '- $TITLE by @$AUTHOR in [#$NUMBER]($URL)'
 template: |
   $CHANGES
+
 categories:
+  - title: 'Major Release'
+    label: 'major'
+
+  - title: 'Hot Fixes'
+    label: 'hotfix'
   - title: 'Features'
     label: 'feature'
 
@@ -13,22 +19,37 @@ categories:
   - title: 'Chores'
     label: 'chore'
 
+# Case insensitive flag (i) acts as a 'catch all'
 autolabeler:
+  - label: 'major'
+    title:
+      - '/bc:/i'
+      - '/breaking:/i'
+      - '/breaking change:/i'
+
+  - label: 'hotfix'
+    branch:
+      - '/hotfix\/.+/i'
+
+  - label: 'feature'
+    branch:
+      - '/feat\/.+/i'
+      - '/feature\/.+/i'
+
+  - label: 'fix'
+    branch:
+      - '/fix\/.+/i'
+
   - label: 'chore'
     files:
       - '*.md'
     branch:
-      - '/chore\/.+/'
+      - '/chore\/.+/i'
 
-  - label: 'fix'
+  - label: 'release'
     branch:
-      - '/fix\/.+/'
-      - '/hotfix\/.+/'
-
-  - label: 'feature'
-    branch:
-      - '/feat\/.+/'
-      - '/feature\/.+/'
+      - 'develop'
+      - '/release\/v.+/i'
 
 version-resolver:
   major:
