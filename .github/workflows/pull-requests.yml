@@ -1,14 +1,13 @@
-# This workflow drafts a new release or updates the drafted release
-# when there is a push event to the main branch.
+# This workflow ensures every pull request has a label
+# when a pull request is opened, reopened or is updated with a new commit.
 
-name: Draft Release
+name: Pull Requests
 
 on:
   # workflow_call:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  pull_request_target:
+    types: [opened, reopened, synchronize]
 
 permissions:
   contents: read
