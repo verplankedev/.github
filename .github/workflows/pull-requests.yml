@@ -1,5 +1,4 @@
-# This workflow ensures every pull request has a label
-# when a pull request is opened, reopened or is updated with a new commit.
+# Ensures every pull request has a label when a pull request is opened, reopened or is updated with a new commit.
 
 name: Pull Requests
 

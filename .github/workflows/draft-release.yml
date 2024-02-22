@@ -1,5 +1,4 @@
-# This workflow drafts a new release or updates the drafted release
-# when there is a push event to the main branch.
+# Draft a new release or updates the drafted release when there is a push event to the main branch.
 
 name: Draft Release
 
@@ -24,6 +23,7 @@ jobs:
     steps:
       - uses: release-drafter/release-drafter@v6
         with:
-          disable-releaser: true
+          publish: true
+          disable-autolabeler: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
